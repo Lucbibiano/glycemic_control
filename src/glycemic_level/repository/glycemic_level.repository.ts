@@ -1,5 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { RegisterLevelEntity } from "../entity/register_level.entity";
+import { HttpErrorByCode } from "@nestjs/common/utils/http-error-by-code.util";
 
 @Injectable()
 export class GlycemicLevelRepository {
@@ -28,25 +29,21 @@ export class GlycemicLevelRepository {
         );
 
         if(!register) {
-            throw new Error('Registro não encontrado!');
+            throw new NotFoundException('Registro não encontrado');
         }
 
         return register;
     }
 
     public async getAllRegister(): Promise<Array<RegisterLevelEntity>> {
-        if (this.registerLevelEntity.length === 0) {
-            throw new Error('Não há registros!');
-        } else {
-            return this.registerLevelEntity;
-        }   
+            return this.registerLevelEntity;   
     }
 
     public async delete(id:string): Promise<RegisterLevelEntity> {
         const register = this.getById(id);
 
         if(!register) {
-            throw new Error('Registro não encontrado!');
+            throw new NotFoundException('Registro não encontrado');
         }
 
         this.registerLevelEntity = this.registerLevelEntity.filter(
