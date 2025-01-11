@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { RegisterLevelEntity } from "../entity/register_level.entity";
-import { HttpErrorByCode } from "@nestjs/common/utils/http-error-by-code.util";
 
 @Injectable()
 export class GlycemicLevelRepository {

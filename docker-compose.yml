@@ -5,8 +5,26 @@ services:
     ports:
       - '3000:3000'
     environment:
-      NODE_ENV: production
-    volumes:
-      - .:/app
-      - /app/node_modules
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USER: root
+      DATABASE_PASSWORD: root
+      DATABASE_NAME: glycemic_control
+    depends_on:
+      - mysql
     command: npm run start:prod
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: glycemic_control
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  mysql_data:
