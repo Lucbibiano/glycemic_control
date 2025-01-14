@@ -7,9 +7,8 @@ This project is designed to register glycemic index on NutriGlico App.
     3 - Access localhost:3000
 
 * HOW TO INSTALL AND START WITH DOCKER?
-    1 - Run "docker build -t glycemic_control_service ."
-    2 - Run "docker-compose up --build"
-    3 - To stop, run "docker-compose down"
+    1 - Run "docker-compose up --build"
+    2 - To stop, run "docker-compose down"
 
 * UTILS:
     1 - If you need to recriate database and all, run "docker-compose down -v"

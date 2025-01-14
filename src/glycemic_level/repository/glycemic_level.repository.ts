@@ -1,12 +1,20 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { RegisterLevelEntity } from "../entity/register_level.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class GlycemicLevelRepository {
+
+    constructor(
+        @InjectRepository(RegisterLevelEntity)
+    private registerLevelRepository: Repository<RegisterLevelEntity>){}
+
     private registerLevelEntity: RegisterLevelEntity[] = [];
 
-    public async save(registerLevel: RegisterLevelEntity): Promise<void> {
-        this.registerLevelEntity.push(registerLevel);
+    public async save(registerLevel: RegisterLevelEntity): Promise<RegisterLevelEntity> {
+        const newRegisterLevel = this.registerLevelRepository.create(registerLevel)
+        return this.registerLevelRepository.save(newRegisterLevel)
     }
 
     public async update(findedRegister: RegisterLevelEntity, registerToUpdate: Partial<RegisterLevelEntity>): Promise<Partial<RegisterLevelEntity>> {
@@ -23,6 +31,7 @@ export class GlycemicLevelRepository {
     }
 
     public async getById(id: string): Promise<RegisterLevelEntity> {
+        
         const register = this.registerLevelEntity.find(
             registerFinded => registerFinded.id === id 
         );
@@ -35,7 +44,7 @@ export class GlycemicLevelRepository {
     }
 
     public async getAllRegister(): Promise<Array<RegisterLevelEntity>> {
-            return this.registerLevelEntity;   
+            return this.registerLevelRepository.find();
     }
 
     public async delete(id:string): Promise<RegisterLevelEntity> {
