@@ -10,6 +10,9 @@ services:
       DATABASE_USER: root
       DATABASE_PASSWORD: root
       DATABASE_NAME: glycemic_control
+    volumes:
+      - .:/app
+      - /app/node_modules
     network_mode: host
 
   mysql:
