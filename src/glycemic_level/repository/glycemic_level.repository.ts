@@ -10,31 +10,20 @@ export class GlycemicLevelRepository {
         @InjectRepository(RegisterLevelEntity)
     private registerLevelRepository: Repository<RegisterLevelEntity>){}
 
-    private registerLevelEntity: RegisterLevelEntity[] = [];
-
-    public async save(registerLevel: RegisterLevelEntity): Promise<RegisterLevelEntity> {
+   public async save(registerLevel: RegisterLevelEntity): Promise<RegisterLevelEntity> {
         const newRegisterLevel = this.registerLevelRepository.create(registerLevel)
         return this.registerLevelRepository.save(newRegisterLevel)
     }
 
-    public async update(findedRegister: RegisterLevelEntity, registerToUpdate: Partial<RegisterLevelEntity>): Promise<Partial<RegisterLevelEntity>> {
+   public async update(findedRegister: RegisterLevelEntity, registerToUpdate: Partial<RegisterLevelEntity>): Promise<Partial<RegisterLevelEntity>> {
 
-        Object.entries(registerToUpdate).forEach(([key, value]) => {
-            if (key === 'id') {
-                return;
-            } else {
-                findedRegister[key] = value;
-            }
-        });
-
-        return findedRegister;
+        Object.assign(findedRegister, registerToUpdate);
+        return this.registerLevelRepository.save(findedRegister);
     }
 
-    public async getById(id: string): Promise<RegisterLevelEntity> {
+   public async getById(id: string): Promise<RegisterLevelEntity> {
         
-        const register = this.registerLevelEntity.find(
-            registerFinded => registerFinded.id === id 
-        );
+        const register = await this.registerLevelRepository.findOneBy({ id });
 
         if(!register) {
             throw new NotFoundException('Registro não encontrado');
@@ -43,23 +32,19 @@ export class GlycemicLevelRepository {
         return register;
     }
 
-    public async getAllRegister(): Promise<Array<RegisterLevelEntity>> {
+   public async getAllRegister(): Promise<Array<RegisterLevelEntity>> {
             return this.registerLevelRepository.find();
     }
 
-    public async delete(id:string): Promise<RegisterLevelEntity> {
+   public async delete(id:string): Promise<RegisterLevelEntity> {
         const register = this.getById(id);
 
         if(!register) {
             throw new NotFoundException('Registro não encontrado');
         }
 
-        this.registerLevelEntity = this.registerLevelEntity.filter(
-            findedRegister => findedRegister.id !== id
-        );
+        this.registerLevelRepository.delete({ id });
 
         return register;
     }
-
-
 }
