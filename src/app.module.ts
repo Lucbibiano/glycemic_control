@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { GlycemicController } from './glycemic_level/glycemic_level.controller';
+import { GlycemicLevelController } from './glycemic_level/glycemic_level.controller';
 import { GlycemicLevelRepository } from './glycemic_level/repository/glycemic_level.repository';
-import { GlycemicLevelService } from './glycemic_level/glycemic_level.service';
+import { GlycemicLevelService } from './glycemic_level/service/glycemic_level.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegisterLevelEntity } from './glycemic_level/entity/register_level.entity';
@@ -26,7 +26,7 @@ import { RegisterLevelEntity } from './glycemic_level/entity/register_level.enti
     }),
     TypeOrmModule.forFeature([RegisterLevelEntity]),
   ],
-  controllers: [GlycemicController],
+  controllers: [GlycemicLevelController],
   providers: [GlycemicLevelRepository, GlycemicLevelService],
 })
 export class AppModule {}

@@ -5,12 +5,12 @@ import { v4 as uuid} from 'uuid';
 import { GlycemicLevelRepository } from "./repository/glycemic_level.repository";
 import { TYPE_LEVEL } from "./enum/glycemic_level.enum";
 import { UpdateRegisterLevelDTO } from "./dto/update_register_level.dto";
-import { GlycemicLevelService } from "./glycemic_level.service";
+import { GlycemicLevelService } from "./service/glycemic_level.service";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('glycemic-level')
 @Controller('glicemic-level')
-export class GlycemicController {
+export class GlycemicLevelController {
 
     constructor(public glycemicLevelRepository: GlycemicLevelRepository, public glycemicLevelService: GlycemicLevelService){}
 
@@ -57,6 +57,8 @@ export class GlycemicController {
 
         this.glycemicLevelRepository.save(registerLevelEntity);
 
+        this.glycemicLevelService.sendTeamsNotification('Registro de glicose cadastrado com sucesso!')
+    
         return {
             id: registerLevelEntity.id,
             message: 'O nível de glicose foi registrado com sucesso!'

@@ -11,7 +11,7 @@ export class GlycemicLevelRepository {
     private registerLevelRepository: Repository<RegisterLevelEntity>){}
 
    public async save(registerLevel: RegisterLevelEntity): Promise<RegisterLevelEntity> {
-        const newRegisterLevel = this.registerLevelRepository.create(registerLevel)
+        const newRegisterLevel = this.registerLevelRepository.create(registerLevel);
         return this.registerLevelRepository.save(newRegisterLevel)
     }
 
