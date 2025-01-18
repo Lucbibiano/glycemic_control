@@ -46,7 +46,7 @@ export class GlycemicLevelService {
                     rate: RATE.ALERT,
                     rateColor: COLOR_RATE.YELLOW
                 }
-            } else if (level >= 140 && level < 200) {
+            } else if (level >= 70 && level < 200) {
                 return  {
                     rate: RATE.NORMAL,
                     rateColor: COLOR_RATE.GREEN
